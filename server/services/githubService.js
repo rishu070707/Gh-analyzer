@@ -31,20 +31,19 @@ const fetchGitHub = async (url, token) => {
 
 // Helper: Fetch Stats with polling for 202 Accepted
 const fetchGitHubStats = async (url, token) => {
-    let retries = 3;
+    let retries = 8; // Increased retries
     while (retries > 0) {
         try {
             const response = await axios.get(url, { headers: getHeaders(token) });
             if (response.status === 200) {
                 return response.data;
             } else if (response.status === 202) {
-                // Statistics are being computed, wait 1.5s and retry
-                await new Promise(resolve => setTimeout(resolve, 1500));
+                // Statistics are being computed, wait 2s and retry
+                await new Promise(resolve => setTimeout(resolve, 2000));
                 retries--;
                 continue;
             }
         } catch (error) {
-            // If 404 or other error, just return empty to avoid crashing the whole analysis
             console.warn(`Failed to fetch stats from ${url}:`, error.message);
             return [];
         }

@@ -81,13 +81,21 @@ const ChartGrid = ({ data }) => {
 
     const dominantLang = useMemo(() => {
         if (languageData.length === 0) return "N/A";
-        // Simple sort to find max value
         const sorted = [...languageData].sort((a, b) => b.value - a.value);
         return sorted[0].name;
     }, [languageData]);
 
     const commitData = useMemo(() => {
         let activity = data.commit_activity;
+
+        // Fallback: If commit_activity is empty but participation is available, use participation (weekly totals)
+        if ((!Array.isArray(activity) || activity.length === 0) && data.participation?.all) {
+            return data.participation.all.map((count, index) => ({
+                week: `W${index + 1}`,
+                commits: count || 0,
+            }));
+        }
+
         if (!Array.isArray(activity) || activity.length === 0) {
             return Array.from({ length: 52 }, (_, i) => ({ total: 0, week: `W${i + 1}`, commits: 0 }));
         }
@@ -95,7 +103,7 @@ const ChartGrid = ({ data }) => {
             week: `W${index + 1}`,
             commits: week.total || 0,
         }));
-    }, [data.commit_activity]);
+    }, [data.commit_activity, data.participation]);
 
     const stats = useMemo(() => {
         const total = commitData.reduce((acc, curr) => acc + curr.commits, 0);
@@ -127,16 +135,17 @@ const ChartGrid = ({ data }) => {
                 className="h-96"
                 overlay={languageData.length === 0 ? "NO LANGUAGE DATA" : null}
             >
-                <PieChart>
+                <PieChart margin={{ top: 10, bottom: 40 }}>
                     <Pie
                         data={languageData}
                         cx="50%"
                         cy="50%"
-                        innerRadius={70}
-                        outerRadius={100}
+                        innerRadius="60%"
+                        outerRadius="85%"
                         paddingAngle={5}
                         dataKey="value"
                         stroke="none"
+                        nameKey="name"
                     >
                         {languageData.map((entry, index) => (
                             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
@@ -145,9 +154,10 @@ const ChartGrid = ({ data }) => {
                     <Tooltip content={<CustomTooltip />} />
                     <Legend
                         verticalAlign="bottom"
-                        height={36}
+                        align="center"
                         iconType="square"
-                        formatter={(value) => <span className="text-white font-mono text-[10px] uppercase hover:text-neon-bright transition-colors ml-2">{value}</span>}
+                        wrapperStyle={{ paddingTop: '20px' }}
+                        formatter={(value) => <span className="text-white font-mono text-[10px] uppercase hover:text-neon-bright transition-colors ml-1">{value}</span>}
                     />
                 </PieChart>
             </ChartContainer>
@@ -159,24 +169,31 @@ const ChartGrid = ({ data }) => {
                 className="h-96"
                 overlay={stats.total === 0 ? "SYSTEM IDLE / NO ACTIVITY" : null}
             >
-                <AreaChart data={commitData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                <AreaChart data={commitData} margin={{ top: 20, right: 30, left: 0, bottom: 0 }}>
                     <defs>
                         <linearGradient id="colorCommits" x1="0" y1="0" x2="0" y2="1">
                             <stop offset="5%" stopColor="#00ff41" stopOpacity={0.3} />
                             <stop offset="95%" stopColor="#00ff41" stopOpacity={0} />
                         </linearGradient>
                     </defs>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#1f2937" vertical={false} />
+                    <CartesianGrid strokeDasharray="3 3" stroke="#1f2937" vertical={false} strokeOpacity={0.3} />
                     <XAxis dataKey="week" hide />
-                    <YAxis stroke="#008F11" fontSize={10} tickLine={false} axisLine={false} />
+                    <YAxis
+                        stroke="#008F11"
+                        fontSize={10}
+                        tickLine={false}
+                        axisLine={false}
+                        tickFormatter={(val) => val > 0 ? val : ''}
+                    />
                     <Tooltip content={<CustomTooltip />} />
                     <Area
-                        type="step"
+                        type="monotone"
                         dataKey="commits"
                         stroke="#00ff41"
-                        strokeWidth={2}
+                        strokeWidth={3}
                         fillOpacity={1}
                         fill="url(#colorCommits)"
+                        animationDuration={2000}
                     />
                 </AreaChart>
             </ChartContainer>
@@ -188,8 +205,8 @@ const ChartGrid = ({ data }) => {
                 className="h-[450px] lg:col-span-2"
                 overlay={punchCardData.length === 0 ? "NO TEMPORAL DATA VECTORS" : null}
             >
-                <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 10 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#1f2937" vertical={false} horizontal={false} />
+                <ScatterChart margin={{ top: 20, right: 40, bottom: 30, left: 10 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#1f2937" vertical={false} horizontal={false} strokeOpacity={0.2} />
                     <XAxis
                         type="number"
                         dataKey="hour"
@@ -200,6 +217,7 @@ const ChartGrid = ({ data }) => {
                         stroke="#008F11"
                         fontSize={10}
                         tickFormatter={(h) => `${h}:00`}
+                        label={{ value: 'DECODED_TIME_UNITS', position: 'bottom', offset: 10, fill: '#008F11', fontSize: 9, fontFamily: 'monospace' }}
                     />
                     <YAxis
                         type="category"
@@ -209,11 +227,15 @@ const ChartGrid = ({ data }) => {
                         fontSize={10}
                         tickLine={false}
                         axisLine={false}
-                        width={40}
+                        width={50}
                     />
-                    <ZAxis type="number" dataKey="count" range={[50, 500]} name="Commits" />
+                    <ZAxis type="number" dataKey="count" range={[50, 400]} name="Commits" />
                     <Tooltip cursor={{ strokeDasharray: '3 3' }} content={<CustomTooltip />} />
-                    <Scatter name="Commits" data={punchCardData} fill="#00f3ff" shape="square" />
+                    <Scatter name="Commits" data={punchCardData} fill="#00f3ff" shape="square">
+                        {punchCardData.map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                        ))}
+                    </Scatter>
                 </ScatterChart>
             </ChartContainer>
 
