@@ -1,16 +1,6 @@
-import React, { useMemo } from 'react';
-import { PieChart, Pie, Cell, ResponsiveContainer, AreaChart, Area, CartesianGrid, XAxis, YAxis, Tooltip, Legend, ScatterChart, Scatter, ZAxis } from 'recharts';
+import { CHART_COLORS } from '../theme';
 
-// Cyberpunk Palette
-const COLORS = [
-    '#00ff41', // Neon Green (Classic)
-    '#00f3ff', // Neon Cyan
-    '#ff00ff', // Neon Pink
-    '#fcee0a', // Neon Yellow
-    '#ffffff', // Pure White (High Contrast)
-    '#bc13fe', // Neon Purple
-    '#ff3131', // Neon Red (Alert)
-];
+const COLORS = CHART_COLORS;
 
 const ChartContainer = ({ title, stat, children, className = "", overlay = null }) => (
     <div className={`glass-card flex flex-col border-neon-dim/20 bg-black-800/80 rounded-none overflow-hidden relative ${className}`}>
@@ -59,12 +49,12 @@ const ChartContainer = ({ title, stat, children, className = "", overlay = null 
 const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
         return (
-            <div className="bg-black-900 border border-neon-bright p-2 shadow-[0_0_10px_rgba(0,255,65,0.3)] min-w-[150px] z-50">
-                <p className="text-neon-bright font-mono text-xs mb-1 uppercase tracking-wider">{label ? `${label}` : ''}</p>
+            <div className="bg-black-800 border border-neon-green/30 p-3 shadow-[0_4px_24px_rgba(0,0,0,0.6)] min-w-[160px] z-50 rounded-none">
+                <p className="text-neon-bright font-mono text-[10px] mb-2 uppercase tracking-widest border-b border-neon-dim/20 pb-1">{label ? `${label}` : ''}</p>
                 {payload.map((entry, index) => (
-                    <p key={index} className="text-white text-sm font-bold flex justify-between items-center gap-4">
-                        <span className="capitalize text-gray-400">{entry.name}:</span>
-                        <span className="text-neon-green font-mono">{entry.value}</span>
+                    <p key={index} className="text-white text-sm font-semibold flex justify-between items-center gap-4 mt-1">
+                        <span className="capitalize text-gray-400 font-mono text-[10px]">{entry.name}:</span>
+                        <span style={{ color: entry.color || COLORS[0] }} className="font-mono">{entry.value}</span>
                     </p>
                 ))}
             </div>

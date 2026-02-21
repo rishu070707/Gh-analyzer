@@ -1,7 +1,8 @@
 import React, { useMemo } from 'react';
 import { Code, Layers, Cpu } from 'lucide-react';
+import { CHART_COLORS } from '../theme';
 
-const COLORS = ['#00ff41', '#00f3ff', '#ff00ff', '#fcee0a', '#bc13fe', '#ff3131', '#ff3131', '#ffffff'];
+const COLORS = CHART_COLORS;
 
 // Map languages to frameworks/tools commonly used
 const FRAMEWORK_MAP = {

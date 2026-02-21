@@ -1,12 +1,13 @@
 import React, { useMemo, useState } from 'react';
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine } from 'recharts';
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { TrendingUp, TrendingDown, Activity } from 'lucide-react';
+import { NEON } from '../theme';
 
 const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
         return (
-            <div className="bg-black-900 border border-neon-bright p-2 shadow-[0_0_10px_rgba(0,255,65,0.3)] min-w-[150px]">
-                <p className="text-neon-bright font-mono text-xs mb-1 uppercase tracking-wider">{label}</p>
+            <div className="bg-black-800 border border-neon-green/30 p-3 shadow-[0_4px_24px_rgba(0,0,0,0.6)] min-w-[150px]">
+                <p className="text-neon-bright font-mono text-[10px] mb-2 uppercase tracking-widest border-b border-neon-dim/20 pb-1">{label}</p>
                 {payload.map((entry, i) => (
                     <p key={i} className="text-white text-sm font-bold flex justify-between items-center gap-4">
                         <span className="text-gray-400 capitalize text-xs">{entry.name}:</span>
@@ -122,20 +123,20 @@ const ActivityTrends = ({ data }) => {
                         <AreaChart data={weeklyData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                             <defs>
                                 <linearGradient id="bgTrend" x1="0" y1="0" x2="0" y2="1">
-                                    <stop offset="5%" stopColor="#00ff41" stopOpacity={0.25} />
-                                    <stop offset="95%" stopColor="#00ff41" stopOpacity={0} />
+                                    <stop offset="5%" stopColor={NEON.green} stopOpacity={0.2} />
+                                    <stop offset="95%" stopColor={NEON.green} stopOpacity={0} />
                                 </linearGradient>
                                 <linearGradient id="bgMA" x1="0" y1="0" x2="0" y2="1">
-                                    <stop offset="5%" stopColor="#00f3ff" stopOpacity={0.2} />
-                                    <stop offset="95%" stopColor="#00f3ff" stopOpacity={0} />
+                                    <stop offset="5%" stopColor={NEON.cyan} stopOpacity={0.15} />
+                                    <stop offset="95%" stopColor={NEON.cyan} stopOpacity={0} />
                                 </linearGradient>
                             </defs>
                             <CartesianGrid strokeDasharray="3 3" stroke="#1f2937" strokeOpacity={0.3} vertical={false} />
                             <XAxis dataKey="label" hide tick={{ fill: '#4b5563', fontSize: 9 }} tickLine={false} axisLine={false} interval={Math.floor(weeklyData.length / 6)} />
                             <YAxis stroke="#008F11" fontSize={9} tickLine={false} axisLine={false} />
                             <Tooltip content={<CustomTooltip />} />
-                            <Area type="monotone" dataKey="commits" stroke="#00ff41" strokeWidth={2} fill="url(#bgTrend)" animationDuration={1500} name="Commits" />
-                            <Area type="monotone" dataKey="movingAvg" stroke="#00f3ff" strokeWidth={1.5} strokeDasharray="4 2" fill="url(#bgMA)" animationDuration={1500} name="4-wk Avg" />
+                            <Area type="monotone" dataKey="commits" stroke={NEON.green} strokeWidth={1.5} fill="url(#bgTrend)" animationDuration={1500} name="Commits" dot={false} />
+                            <Area type="monotone" dataKey="movingAvg" stroke={NEON.cyan} strokeWidth={1} strokeDasharray="4 2" fill="url(#bgMA)" animationDuration={1500} name="4-wk Avg" dot={false} />
                         </AreaChart>
                     </ResponsiveContainer>
                 )}
