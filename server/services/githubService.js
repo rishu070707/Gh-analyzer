@@ -6,8 +6,10 @@ const getHeaders = (token) => {
     const headers = {
         'Accept': 'application/vnd.github.v3+json',
     };
-    const authToken = token || process.env.GITHUB_TOKEN;
+    let authToken = token || process.env.GITHUB_TOKEN;
     if (authToken) {
+        // Trim to remove accidental spaces or newlines from env variables
+        authToken = authToken.trim();
         headers['Authorization'] = `token ${authToken}`;
     }
     return headers;
