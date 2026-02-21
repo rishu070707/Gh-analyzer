@@ -154,7 +154,7 @@ const GrowthBenchmarks = ({ data }) => {
                                 <XAxis dataKey="label" stroke="#4b5563" fontSize={9} tickLine={false} axisLine={false} />
                                 <YAxis stroke="#008F11" fontSize={9} tickLine={false} axisLine={false} tickFormatter={v => `${v}%`} />
                                 <ReferenceLine y={0} stroke="#008F11" strokeDasharray="3 3" strokeOpacity={0.5} />
-                                <Tooltip content={<CustomTooltip />} />
+                                <Tooltip content={<CustomTooltip />} cursor={{ fill: '#000000', fillOpacity: 0.5 }} />
                                 <Bar dataKey="growth" name="MoM Growth %">
                                     {momGrowth.slice(1).map((entry, i) => (
                                         <Cell key={i} fill={entry.growth >= 0 ? '#00ff41' : '#ff3131'} />

@@ -133,7 +133,7 @@ const ActivityTrends = ({ data }) => {
                             <CartesianGrid strokeDasharray="3 3" stroke="#1f2937" strokeOpacity={0.3} vertical={false} />
                             <XAxis dataKey="label" hide tick={{ fill: '#4b5563', fontSize: 9 }} tickLine={false} axisLine={false} interval={Math.floor(weeklyData.length / 6)} />
                             <YAxis stroke="#008F11" fontSize={9} tickLine={false} axisLine={false} />
-                            <Tooltip content={<CustomTooltip />} />
+                            <Tooltip content={<CustomTooltip />} cursor={{ fill: '#000000', fillOpacity: 0.5 }} />
                             <Area type="monotone" dataKey="commits" stroke="#00ff41" strokeWidth={2} fill="url(#bgTrend)" animationDuration={1500} name="Commits" />
                             <Area type="monotone" dataKey="movingAvg" stroke="#00f3ff" strokeWidth={1.5} strokeDasharray="4 2" fill="url(#bgMA)" animationDuration={1500} name="4-wk Avg" />
                         </AreaChart>

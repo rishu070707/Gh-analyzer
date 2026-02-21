@@ -185,7 +185,7 @@ const ChartGrid = ({ data }) => {
                         axisLine={false}
                         tickFormatter={(val) => val > 0 ? val : ''}
                     />
-                    <Tooltip content={<CustomTooltip />} />
+                    <Tooltip content={<CustomTooltip />} cursor={{ fill: '#000000', fillOpacity: 0.5 }} />
                     <Area
                         type="monotone"
                         dataKey="commits"
@@ -230,7 +230,7 @@ const ChartGrid = ({ data }) => {
                         width={50}
                     />
                     <ZAxis type="number" dataKey="count" range={[50, 400]} name="Commits" />
-                    <Tooltip cursor={{ strokeDasharray: '3 3' }} content={<CustomTooltip />} />
+                    <Tooltip cursor={{ fill: '#000000', fillOpacity: 0.5 }} content={<CustomTooltip />} />
                     <Scatter name="Commits" data={punchCardData} fill="#00f3ff" shape="square">
                         {punchCardData.map((entry, index) => (
                             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />

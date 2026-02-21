@@ -113,7 +113,7 @@ const RepoInsights = ({ data }) => {
                                 <CartesianGrid strokeDasharray="3 3" stroke="#1f2937" strokeOpacity={0.2} vertical={false} />
                                 <XAxis dataKey="label" stroke="#4b5563" fontSize={9} tickLine={false} axisLine={false} />
                                 <YAxis stroke="#008F11" fontSize={9} tickLine={false} axisLine={false} />
-                                <Tooltip content={<CustomTooltip />} />
+                                <Tooltip content={<CustomTooltip />} cursor={{ fill: '#000000', fillOpacity: 0.5 }} />
                                 <Bar dataKey="commits" name="Commits" radius={[0, 0, 0, 0]}>
                                     {insights.monthlyGroups.map((_, i) => (
                                         <Cell key={i} fill={COLORS[i % COLORS.length]} />

@@ -7,55 +7,57 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Space Grotesk', 'system-ui', 'sans-serif'],
-                mono: ['JetBrains Mono', 'Fira Code', 'Cascadia Code', 'ui-monospace', 'monospace'],
+                // Robotic terminal display font for headings
+                sans: ['Orbitron', 'Share Tech Mono', 'ui-monospace', 'monospace'],
+                // Classic terminal mono for body/code
+                mono: ['Share Tech Mono', 'VT323', 'Courier New', 'ui-monospace', 'monospace'],
             },
             colors: {
                 // ── Backgrounds ──────────────────────────
                 black: {
                     DEFAULT: '#000000',
                     900: '#050505',
-                    800: '#0c0c0f',
-                    750: '#101014',
-                    700: '#131318',
-                    600: '#1a1a22',
+                    800: '#080808',
+                    750: '#0c0c0c',
+                    700: '#101010',
+                    600: '#141414',
                 },
-                // ── Primary accent: Sage Neon Green ──────
+                // ── Primary accent: Classic Matrix Neon Green ──────
                 neon: {
-                    green: '#4ade80',   // softer, more premium emerald-green
-                    dim: '#16a34a',   // muted for borders/accents
-                    bright: '#86efac',  // light for headlines
+                    green: '#00ff41',   // classic matrix green
+                    dim: '#008F11',   // muted for borders/accents
+                    bright: '#39ff14',   // electric lime for highlights
                 },
                 // ── Extended palette ──────────────────────
                 emerald: {
-                    neon: '#34d399',
+                    neon: '#00ff41',
                 },
                 cyan: {
-                    neon: '#22d3ee',
+                    neon: '#00f3ff',
                 },
                 violet: {
-                    neon: '#a78bfa',
+                    neon: '#bc13fe',
                 },
                 amber: {
-                    neon: '#fbbf24',
+                    neon: '#fcee0a',
                 },
                 rose: {
-                    neon: '#fb7185',
+                    neon: '#ff3131',
                 },
             },
             boxShadow: {
-                'neon-dim': '0 0 20px rgba(74, 222, 128, 0.08)',
-                'neon-hover': '0 0 30px rgba(134, 239, 172, 0.15)',
-                'neon-glow': '0 0 40px rgba(74, 222, 128, 0.2)',
-                'card': '0 1px 3px rgba(0,0,0,0.5), 0 8px 24px rgba(0,0,0,0.4)',
+                'neon-dim': '0 0 20px rgba(0,255,65,0.12)',
+                'neon-hover': '0 0 30px rgba(57,255,20,0.25)',
+                'neon-glow': '0 0 40px rgba(0,255,65,0.30)',
+                'card': '0 1px 3px rgba(0,0,0,0.8), 0 8px 24px rgba(0,0,0,0.6)',
             },
             dropShadow: {
-                'neon-glow': '0 0 6px rgba(74, 222, 128, 0.6)',
+                'neon-glow': '0 0 8px rgba(0,255,65,0.8)',
             },
             animation: {
                 'fade-in': 'fadeIn 0.4s ease-out',
                 'slide-up': 'slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
-                'pulse-glow': 'pulseGlow 4s infinite',
+                'pulse-glow': 'pulseGlow 2s infinite',
                 'scanline': 'scanline 8s linear infinite',
                 'grid-scroll': 'gridScroll 30s linear infinite',
                 'float': 'float 6s ease-in-out infinite',
@@ -70,8 +72,8 @@ export default {
                     '100%': { transform: 'translateY(0)', opacity: '1' },
                 },
                 pulseGlow: {
-                    '0%, 100%': { boxShadow: '0 0 6px rgba(74, 222, 128, 0.15)', borderColor: 'rgba(22, 163, 74, 0.4)' },
-                    '50%': { boxShadow: '0 0 20px rgba(74, 222, 128, 0.3)', borderColor: 'rgba(74, 222, 128, 0.6)' },
+                    '0%, 100%': { boxShadow: '0 0 8px rgba(0,255,65,0.25)', borderColor: 'rgba(0,143,17,0.5)' },
+                    '50%': { boxShadow: '0 0 24px rgba(0,255,65,0.50)', borderColor: 'rgba(0,255,65,0.8)' },
                 },
                 gridScroll: {
                     '0%': { backgroundPosition: '0 0' },
@@ -83,8 +85,8 @@ export default {
                 },
             },
             letterSpacing: {
-                'terminal': '0.12em',
-                'display': '-0.03em',
+                'terminal': '0.15em',
+                'display': '0.08em',
             },
         },
     },
