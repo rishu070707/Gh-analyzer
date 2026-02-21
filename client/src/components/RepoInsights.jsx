@@ -1,9 +1,8 @@
 import React, { useMemo } from 'react';
 import { Database, Activity, Users, Clock, Target, Zap } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
-import { CHART_COLORS } from '../theme';
 
-const COLORS = CHART_COLORS;
+const COLORS = ['#00ff41', '#00f3ff', '#ff00ff', '#fcee0a', '#bc13fe', '#ff3131'];
 
 const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {

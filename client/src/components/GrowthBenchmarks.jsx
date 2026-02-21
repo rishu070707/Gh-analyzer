@@ -1,9 +1,8 @@
 import React, { useMemo } from 'react';
 import { TrendingUp, TrendingDown, BarChart2, Users, Star } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, LineChart, Line, ReferenceLine } from 'recharts';
-import { CHART_COLORS } from '../theme';
 
-const COLORS = CHART_COLORS;
+const COLORS = ['#00ff41', '#00f3ff', '#ff00ff', '#fcee0a'];
 
 const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
